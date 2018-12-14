@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MusGig</string>
+    <string name="title_activity_add">Добавление площадки</string>
+    <string name="venue_name">Название площадки</string>
+    <string name="venue_capacity">Вместимость</string>
+    <string name="venue_price">Цена</string>
+    <string name="pick_image_intent_text">Выберите опцию</string>
+</resources>

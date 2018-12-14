@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="100dp"
+    tools:context=".addItem.AddActivity">
+
+
+    <ImageView
+        android:id="@+id/pickImage"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:onClick="pickImage"
+        android:src="@android:drawable/ic_menu_crop" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/venue_name" />
+
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Местоположение" />
+
+    <EditText
+        android:id="@+id/capacity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/venue_capacity"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/venue_price"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Рейтинг"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="addButton"
+        android:text="добавить" />
+
+</LinearLayout>
