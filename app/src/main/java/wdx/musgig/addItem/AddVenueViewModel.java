@@ -33,7 +33,7 @@ public class AddVenueViewModel extends AndroidViewModel {
 
         @Override
         protected Void doInBackground(final VenueModel... params) {
-            db.itemAndPersonModel().addVenue(params[0]);
+            db.VenuesModel().addVenue(params[0]);
             return null;
         }
 

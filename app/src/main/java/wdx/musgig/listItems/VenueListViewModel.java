@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.support.v7.util.SortedList;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class VenueListViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<List<VenueModel>> getVenuesList() {
+    public LiveData<SortedList<VenueModel>> getVenuesList() {
         return VenuesList;
     }
 

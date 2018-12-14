@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import wdx.musgig.R;
 import wdx.musgig.addItem.AddActivity;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
         viewModel = ViewModelProviders.of(this).get(VenueListViewModel.class);
 
-        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
+        viewModel.getVenuesList().observe(MainActivity.this, new Observer<SortedList<VenueModel>>() {
             @Override
             public void onChanged(@Nullable SortedList<VenueModel> Venues) {
                 recyclerViewAdapter.addItems(Venues);
