@@ -1,6 +1,7 @@
 package wdx.musgig.listItems;
 
 import android.net.Uri;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,18 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import wdx.musgig.R;
 import wdx.musgig.db.VenueModel;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
 
-    private List<VenueModel> VenueModelList;
+    private SortedList<VenueModel> VenueModelList;
     private View.OnLongClickListener longClickListener;
 
-    public RecyclerViewAdapter(List<VenueModel> VenueModelList, View.OnLongClickListener longClickListener) {
+    public RecyclerViewAdapter(SortedList<VenueModel> VenueModelList, View.OnLongClickListener longClickListener) {
         this.VenueModelList = VenueModelList;
         this.longClickListener = longClickListener;
     }
@@ -29,6 +28,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return new RecyclerViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_item, parent, false));
     }
+
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
@@ -49,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return VenueModelList.size();
     }
 
-    public void addItems(List<VenueModel> VenueModelList) {
+    public void addItems(SortedList<VenueModel> VenueModelList) {
         this.VenueModelList = VenueModelList;
         notifyDataSetChanged();
     }

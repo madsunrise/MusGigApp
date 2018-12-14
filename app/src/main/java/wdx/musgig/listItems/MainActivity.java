@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button fab = findViewById(R.id.button);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, AddActivity.class));
@@ -47,11 +48,13 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
         viewModel = ViewModelProviders.of(this).get(VenueListViewModel.class);
 
-        viewModel.getItemAndPersonList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
+        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
-            public void onChanged(@Nullable List<VenueModel> itemAndPeople) {
-                recyclerViewAdapter.addItems(itemAndPeople);
+            public void onChanged(@Nullable SortedList<VenueModel> Venues) {
+                recyclerViewAdapter.addItems(Venues);
             }
+
+
         });
 
     }

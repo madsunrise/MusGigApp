@@ -13,7 +13,7 @@ import wdx.musgig.db.VenueModel;
 
 public class VenueListViewModel extends AndroidViewModel {
 
-    private final LiveData<List<VenueModel>> itemAndPersonList;
+    private final LiveData<List<VenueModel>> VenuesList;
 
     private AppDatabase appDatabase;
 
@@ -22,12 +22,12 @@ public class VenueListViewModel extends AndroidViewModel {
 
         appDatabase = AppDatabase.getDatabase(this.getApplication());
 
-        itemAndPersonList = appDatabase.itemAndPersonModel().getAllVenueItems();
+        VenuesList = appDatabase.VenuesModel().getAllVenueItems();
     }
 
 
-    public LiveData<List<VenueModel>> getItemAndPersonList() {
-        return itemAndPersonList;
+    public LiveData<List<VenueModel>> getVenuesList() {
+        return VenuesList;
     }
 
     public void deleteItem(VenueModel VenueModel) {
@@ -44,7 +44,7 @@ public class VenueListViewModel extends AndroidViewModel {
 
         @Override
         protected Void doInBackground(final VenueModel... params) {
-            db.itemAndPersonModel().deleteVenue(params[0]);
+            db.VenuesModel().deleteVenue(params[0]);
             return null;
         }
 

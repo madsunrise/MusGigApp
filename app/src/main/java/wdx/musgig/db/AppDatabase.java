@@ -24,6 +24,6 @@ public abstract class AppDatabase extends RoomDatabase {
         INSTANCE = null;
     }
 
-    public abstract VenueModelDao itemAndPersonModel();
+    public abstract VenueModelDao VenuesModel();
 
 }
