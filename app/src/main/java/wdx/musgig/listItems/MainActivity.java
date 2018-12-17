@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private VenueListViewModel viewModel;
     private RecyclerViewAdapter recyclerViewAdapter;
     private RecyclerView recyclerView;
-    private List<VenueModel> model = new ArrayList<>();
 
 
 
@@ -34,23 +33,45 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        ImageView people_icon = (ImageView) findViewById(R.id.people_icon);
+        ImageView price_icon = (ImageView) findViewById(R.id.price_icon);
+        View.OnClickListener sortBtn = new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddActivity.class));
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.people_icon:
+                        price_icon.setImageResource(R.drawable.price_icon); // убираем стрелочки со всего остального
+                        if (people_icon.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.people_icon_up).getConstantState()) { // Если уже сортировали по возрастанию
+                            sortBy("people", false);
+                            people_icon.setImageResource(R.drawable.people_icon_down);
+                        } else {                                                               // Если нет то начинаем с сортировки по возрастанию
+                            people_icon.setImageResource(R.drawable.people_icon_up);
+                            sortBy("people", true);
+                        }
+                        break;
+                    case R.id.price_icon:
+                        people_icon.setImageResource(R.drawable.people_icon);
+                        if (price_icon.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.price_icon_up).getConstantState()) { // Если уже сортировали по возрастанию
+                            sortBy("price", false);
+                            price_icon.setImageResource(R.drawable.price_icon_down);
+                        } else {                                                               // Если нет то начинаем с сортировки по возрастанию
+                            price_icon.setImageResource(R.drawable.price_icon_up);
+                            sortBy("price", true);
+                        }
+                        break;
+                }
             }
-        });
+        };
+        people_icon.setOnClickListener(sortBtn);
+        price_icon.setOnClickListener(sortBtn);
 
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<VenueModel>(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.setAdapter(recyclerViewAdapter);
-
         viewModel = ViewModelProviders.of(this).get(VenueListViewModel.class);
-
         viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
@@ -75,4 +96,41 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewModel.deleteItem(VenueModel);
         return true;
     }
+
+    public void addVenue(View view) {
+        startActivity(new Intent(MainActivity.this, AddActivity.class));
+    }
+
+    public void sortBy(String param, boolean increase) {
+        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
+            @Override
+            public void onChanged(@Nullable List<VenueModel> Venues) {
+                Collections.sort(Venues, new Comparator<VenueModel>() {
+                    @Override
+                    public int compare(VenueModel first, VenueModel second) {
+                        switch (param) {
+                            case "people":
+                                if (increase)
+                                    return Integer.valueOf(first.getCapacity()) < Integer.valueOf(second.getCapacity()) ? -1 :
+                                            Integer.valueOf(first.getCapacity()) > Integer.valueOf(second.getCapacity()) ? 1 : 0;
+                                return Integer.valueOf(first.getCapacity()) > Integer.valueOf(second.getCapacity()) ? -1 :
+                                        Integer.valueOf(first.getCapacity()) < Integer.valueOf(second.getCapacity()) ? 1 : 0;
+
+                            case "price":
+                                if (increase)
+                                    return Integer.valueOf(first.getPrice()) < Integer.valueOf(second.getPrice()) ? -1 :
+                                            Integer.valueOf(first.getPrice()) > Integer.valueOf(second.getPrice()) ? 1 : 0;
+                                return Integer.valueOf(first.getPrice()) > Integer.valueOf(second.getPrice()) ? -1 :
+                                        Integer.valueOf(first.getPrice()) < Integer.valueOf(second.getPrice()) ? 1 : 0;
+
+                        }
+                        return 0;
+                    }
+                });
+                recyclerViewAdapter.addItems(Venues);
+            }
+        });
+    }
+
+
 }

@@ -38,7 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.capacityTextView.setText("Вместимость: " + VenueModel.getCapacity() + " чел.");
         holder.priceTextView.setText("Залог: " + VenueModel.getPrice() + " руб.");
         holder.locationTextView.setText("Находится: " + VenueModel.getLocation());
-        holder.ratingTextView.setText("Рейтинг: " + VenueModel.getRating() + "из 10");
+        holder.ratingTextView.setText("Рейтинг: " + VenueModel.getRating() + " из 10");
         if (VenueModel.getPhoto() != null)
             holder.image.setImageURI(Uri.parse(VenueModel.getPhoto()));
         holder.itemView.setTag(VenueModel);
