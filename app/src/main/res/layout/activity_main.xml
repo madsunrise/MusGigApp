@@ -31,7 +31,7 @@
 
                 <ImageView
                     android:id="@+id/place_icon"
-                    android:layout_width="40dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/icon_selector"
                     android:visibility="invisible"
@@ -39,7 +39,7 @@
 
                 <ImageView
                     android:id="@+id/rate_icon"
-                    android:layout_width="40dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/icon_selector"
                     android:visibility="invisible"
@@ -47,28 +47,28 @@
 
                 <ImageView
                     android:id="@+id/people_icon"
-                    android:layout_width="40dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/icon_selector"
                     app:srcCompat="@drawable/people_icon" />
 
                 <ImageView
                     android:id="@+id/price_icon"
-                    android:layout_width="40dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/icon_selector"
                     app:srcCompat="@drawable/price_icon" />
 
                 <ImageView
                     android:id="@+id/search_icon"
-                    android:layout_width="40dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/icon_selector"
                     app:srcCompat="@drawable/search_icon" />
 
                 <ImageView
                     android:id="@+id/addVenue"
-                    android:layout_width="40dp"
+                    android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/icon_selector"
                     android:onClick="addVenue"

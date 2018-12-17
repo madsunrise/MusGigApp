@@ -42,21 +42,21 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                 switch (v.getId()) {
                     case R.id.people_icon:
                         price_icon.setImageResource(R.drawable.price_icon); // убираем стрелочки со всего остального
-                        if (people_icon.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.people_icon_up).getConstantState()) { // Если уже сортировали по возрастанию
+                        if (people_icon.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.people_icon_down).getConstantState()) { // Если уже сортировали по возрастанию
                             sortBy("people", false);
-                            people_icon.setImageResource(R.drawable.people_icon_down);
-                        } else {                                                               // Если нет то начинаем с сортировки по возрастанию
                             people_icon.setImageResource(R.drawable.people_icon_up);
+                        } else {                                                               // Если нет то начинаем с сортировки по возрастанию
+                            people_icon.setImageResource(R.drawable.people_icon_down);
                             sortBy("people", true);
                         }
                         break;
                     case R.id.price_icon:
                         people_icon.setImageResource(R.drawable.people_icon);
-                        if (price_icon.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.price_icon_up).getConstantState()) { // Если уже сортировали по возрастанию
+                        if (price_icon.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.price_icon_down).getConstantState()) { // Если уже сортировали по возрастанию
                             sortBy("price", false);
-                            price_icon.setImageResource(R.drawable.price_icon_down);
-                        } else {                                                               // Если нет то начинаем с сортировки по возрастанию
                             price_icon.setImageResource(R.drawable.price_icon_up);
+                        } else {                                                               // Если нет то начинаем с сортировки по возрастанию
+                            price_icon.setImageResource(R.drawable.price_icon_down);
                             sortBy("price", true);
                         }
                         break;
