@@ -12,6 +12,13 @@ import android.widget.Toast;
 
 import com.myhexaville.smartimagepicker.ImagePicker;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
+
 import wdx.musgig.R;
 import wdx.musgig.db.VenueModel;
 
@@ -31,7 +38,6 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        //    getSupportActionBar().hide();
         capacity = findViewById(R.id.capacity);
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
@@ -44,7 +50,8 @@ public class AddActivity extends AppCompatActivity {
                 imageUri -> {
                     imageString = imageUri.toString();
                     pickImage.setImageURI(imageUri);
-                    Base64();
+
+
                 })
                 .setWithImageCrop(
                         1,
@@ -89,9 +96,42 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
-    public void Base64() {
+    private String SavePicture(ImageView iv, String folderToSave) {
+        OutputStream fOut = null;
+
+
+        try {
+            File file = new File(folderToSave, "5466.jpg");
+            fOut = new FileOutputStream(file);
+
+
+            //    bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut); // сохранять картинку в jpeg-формате с 85% сжатия.
+            fOut.flush();
+            fOut.close();
+
+        } catch (Exception e) // здесь необходим блок отслеживания реальных ошибок и исключений, общий Exception приведен в качестве примера
+        {
+            return e.getMessage();
+        }
+        return "";
     }
 
+    private void moveFile(File file, File dir)
+            throws IOException {
+        File newFile = new File(dir, file.getName());
+        FileChannel outputChannel = null;
+        FileChannel inputChannel = null;
+        try {
+            outputChannel = new FileOutputStream(newFile).getChannel();
+            inputChannel = new FileInputStream(file).getChannel();
+            inputChannel.transferTo(0, inputChannel.size(), outputChannel);
+            inputChannel.close();
+            file.delete();
+        } finally {
+            if (inputChannel != null) inputChannel.close();
+            if (outputChannel != null) outputChannel.close();
+        }
+    }
 
 }
 

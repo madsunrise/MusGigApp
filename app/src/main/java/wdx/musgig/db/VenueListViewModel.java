@@ -1,4 +1,4 @@
-package wdx.musgig.listItems;
+package wdx.musgig.db;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -6,9 +6,6 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
-
-import wdx.musgig.db.AppDatabase;
-import wdx.musgig.db.VenueModel;
 
 
 public class VenueListViewModel extends AndroidViewModel {

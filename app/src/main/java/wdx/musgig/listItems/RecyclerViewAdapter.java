@@ -19,6 +19,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<VenueModel> VenueModelList;
     private View.OnLongClickListener longClickListener;
 
+
     public RecyclerViewAdapter(List<VenueModel> VenueModelList, View.OnLongClickListener longClickListener) {
         this.VenueModelList = VenueModelList;
         this.longClickListener = longClickListener;
@@ -41,6 +42,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.ratingTextView.setText("Рейтинг: " + VenueModel.getRating() + " из 10");
         if (VenueModel.getPhoto() != null)
             holder.image.setImageURI(Uri.parse(VenueModel.getPhoto()));
+        else
+            holder.image.setImageResource(R.drawable.mezzo);
+
         holder.itemView.setTag(VenueModel);
         holder.itemView.setOnLongClickListener(longClickListener);
     }
@@ -71,6 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             locationTextView = view.findViewById(R.id.locationTextView);
             ratingTextView = view.findViewById(R.id.ratingTextView);
             image = view.findViewById(R.id.image);
+
         }
     }
 }

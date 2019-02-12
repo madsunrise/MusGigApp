@@ -3,12 +3,17 @@ package wdx.musgig.listItems;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -18,6 +23,7 @@ import java.util.List;
 
 import wdx.musgig.R;
 import wdx.musgig.addItem.AddActivity;
+import wdx.musgig.db.VenueListViewModel;
 import wdx.musgig.db.VenueModel;
 
 
@@ -26,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private VenueListViewModel viewModel;
     private RecyclerViewAdapter recyclerViewAdapter;
     private RecyclerView recyclerView;
-
+    FrameLayout bar;
 
 
     @Override
@@ -34,8 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView people_icon = (ImageView) findViewById(R.id.people_icon);
-        ImageView price_icon = (ImageView) findViewById(R.id.price_icon);
+
+        bar = findViewById(R.id.bar);
+
+        ImageView people_icon = findViewById(R.id.people_icon);
+        ImageView price_icon = findViewById(R.id.price_icon);
         View.OnClickListener sortBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +93,46 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                 });
                 recyclerViewAdapter.addItems(Venues);
             }
+        });
 
+        recyclerView.addOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
+
+            @Override
+            public void onShow() {
+                showViews();
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                //show views if first item is first visible position and views are hidden
+                if (firstVisibleItem == 0) {
+                    if (!controlsVisible) {
+                        onShow();
+                        controlsVisible = true;
+                    }
+                } else {
+                    if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
+                        onHide();
+                        controlsVisible = false;
+                        scrolledDistance = 0;
+                    } else if (scrolledDistance < -HIDE_THRESHOLD && !controlsVisible) {
+                        onShow();
+                        controlsVisible = true;
+                        scrolledDistance = 0;
+                    }
+                }
+
+                if ((controlsVisible && dy > 0) || (!controlsVisible && dy < 0)) {
+                    scrolledDistance += dy;
+                }
+            }
 
         });
 
@@ -133,4 +181,25 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
 
+    private void hideViews() {
+        bar.animate().translationY(-bar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showViews() {
+        bar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+    }
+
+
+    public void expand(View view) {
+        Intent intent = new Intent(this, DetailedActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            View image = findViewById(R.id.image);
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this, image, "profile");
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
+
+    }
 }

@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
+    ​
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="expand"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -22,6 +24,7 @@
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
+                android:transitionName="profile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/mezzo"
                 tools:layout_editor_absoluteY="0dp" />
@@ -111,4 +114,6 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+
 </LinearLayout>

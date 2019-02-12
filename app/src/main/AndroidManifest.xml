@@ -21,6 +21,11 @@
             android:name=".addItem.AddActivity"
             android:label="@string/title_activity_add"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".listItems.DetailedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
