@@ -84,13 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
-                Collections.sort(Venues, new Comparator<VenueModel>() {
-                    @Override
-                    public int compare(VenueModel first, VenueModel second) {
-                        return Integer.valueOf(first.getPrice()) > Integer.valueOf(second.getPrice()) ? -1 :
-                                Integer.valueOf(first.getPrice()) < Integer.valueOf(second.getPrice()) ? 1 : 0;
-                    }
-                });
+
                 recyclerViewAdapter.addItems(Venues);
             }
         });
