@@ -41,7 +41,7 @@
         android:id="@+id/pickImage"
         android:layout_width="match_parent"
         android:layout_height="132dp"
-        android:onClick="pickImage"
+        android:onClick="openCamera"
         android:src="@drawable/add_photo" />
 
     <EditText
