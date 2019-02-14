@@ -1,12 +1,13 @@
 package wdx.musgig.addItem;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -14,9 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.File;
-import java.io.IOException;
 
 import wdx.musgig.R;
 import wdx.musgig.db.VenueModel;
@@ -32,6 +30,7 @@ public class AddActivity extends AppCompatActivity {
     ImageView pickImage;
     private Uri imageUri;
     private Activity activity;
+    Uri mCropImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +42,6 @@ public class AddActivity extends AppCompatActivity {
         location = findViewById(R.id.location);
         rating = findViewById(R.id.rating);
         pickImage = findViewById(R.id.pickImage);
-
-
 
         addVenueViewModel = ViewModelProviders.of(this).get(AddVenueViewModel.class);
     }
@@ -64,76 +61,59 @@ public class AddActivity extends AppCompatActivity {
             ));
             finish();
         }
-
     }
-
 
     public void openCamera(View view) {
-        choosePhoto();
 
-
+        CropImage.startPickImageActivity(this);
     }
 
-    public void choosePhoto() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
-        File file = new File(getCacheDir().getAbsolutePath() + "/" + "photo_" + System.currentTimeMillis() + ".jpg");
-        imageUri = Uri.fromFile(file);
-        Intent chooser = Intent.createChooser(galleryIntent, "Выберите откуда");
-        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
-        chooser.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-        startActivityForResult(chooser, 1);
-    }
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == this.RESULT_CANCELED) {
-            return;
-        }
-        boolean isCamera = false;
-        if (data.getAction() != null) isCamera = true;
-        if (!isCamera) {
-            Uri contentURI = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                //        String path = saveImage(bitmap);
-                Toast.makeText(AddActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
-                //         imageview.setImageBitmap(bitmap);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(AddActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
-            }
-        } else if (isCamera) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            pickImage.setImageBitmap(thumbnail);
-            //    saveImage(thumbnail);
-
-            //   Object obj = data.getExtras().get("data");
-            //   if (obj instanceof Bitmap) {
-            //   Bitmap bitmap = (Bitmap) obj;
-            //    pickImage.setImageURI(imageUri);
-
-
-            Toast.makeText(AddActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @SuppressLint("NewApi")
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+                imageUri = result.getUri();
+                pickImage.setImageURI(imageUri);
+            }
+        }
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            imageUri = CropImage.getPickImageResultUri(this, data);
+
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
+                mCropImageUri = imageUri;
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+            } else {
+                startCropImageActivity(imageUri);
+
+            }
+        }
+
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+            if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCropImageActivity(mCropImageUri);
+
+            } else {
+                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show();
             }
         }
     }
+
+    private void startCropImageActivity(Uri imageUri) {
+        CropImage.activity(imageUri)
+                .setAspectRatio(1, 1)
+                .start(this);
+    }
+
+
+
         }
 
 
