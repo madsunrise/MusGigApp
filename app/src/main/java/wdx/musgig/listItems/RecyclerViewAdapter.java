@@ -1,11 +1,17 @@
 package wdx.musgig.listItems;
 
+
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -15,9 +21,9 @@ import wdx.musgig.db.VenueModel;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
-
     private List<VenueModel> VenueModelList;
     private View.OnLongClickListener longClickListener;
+
 
 
     public RecyclerViewAdapter(List<VenueModel> VenueModelList, View.OnLongClickListener longClickListener) {
@@ -29,6 +35,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_item, parent, false));
+
+
     }
 
 
@@ -44,9 +52,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.image.setImageURI(Uri.parse(VenueModel.getPhoto()));
         else
             holder.image.setImageResource(R.drawable.mezzo);
-
         holder.itemView.setTag(VenueModel);
         holder.itemView.setOnLongClickListener(longClickListener);
+
+
+        holder.recycler_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Pair<View, String> pair1 = Pair.create((View) holder.image, holder.image.getTransitionName());
+                Pair<View, String> pair2 = Pair.create((View) holder.nameTextView, holder.nameTextView.getTransitionName());
+                Pair<View, String> pair3 = Pair.create((View) holder.capacityTextView, holder.capacityTextView.getTransitionName());
+                Pair<View, String> pair4 = Pair.create((View) holder.priceTextView, holder.priceTextView.getTransitionName());
+                Pair<View, String> pair5 = Pair.create((View) holder.locationTextView, holder.locationTextView.getTransitionName());
+                Pair<View, String> pair6 = Pair.create((View) holder.ratingTextView, holder.ratingTextView.getTransitionName());
+                Intent intent = new Intent(v.getContext(), DetailedActivity.class);
+                intent.putExtra("EXTRA_POSITION", VenueModel.getName().toString());
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), pair1, pair2, pair3, pair4, pair5, pair6);
+                v.getContext().startActivity(intent, optionsCompat.toBundle());
+
+            }
+        });
+
+
     }
 
     @Override
@@ -66,6 +93,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView locationTextView;
         private TextView ratingTextView;
         private ImageView image;
+        private LinearLayout recycler_item;
+
+
+
+
 
         RecyclerViewHolder(View view) {
             super(view);
@@ -75,6 +107,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             locationTextView = view.findViewById(R.id.locationTextView);
             ratingTextView = view.findViewById(R.id.ratingTextView);
             image = view.findViewById(R.id.image);
+            recycler_item = view.findViewById(R.id.recycler_item);
+            //  cardView = view.findViewById(R.id.cardView);
+
 
         }
     }

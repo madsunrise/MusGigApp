@@ -19,6 +19,7 @@ public interface VenueModelDao {
     @Query("select * from VenueModel where id = :id")
     VenueModel getItembyId(String id);
 
+
     @Insert(onConflict = REPLACE)
     void addVenue(VenueModel VenueModel);
 

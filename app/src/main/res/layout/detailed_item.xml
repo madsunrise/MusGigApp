@@ -3,77 +3,109 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
         android:layout_height="477dp"
-        android:onClick="expand"
-        app:cardUseCompatPadding="true">
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:transitionName="Shared cardView"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="363dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:orientation="vertical"
-            android:paddingLeft="10dp">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="345dp"
-                android:paddingStart="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:transitionName="profile"
+                android:layout_height="199dp"
+                android:scaleType="center"
+                android:transitionName="Shared image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/mezzo"
                 tools:layout_editor_absoluteY="0dp" />
 
-            <TextView
-                android:id="@+id/nameTextView"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:text="Mezzo Forte"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.042"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                tools:layout_editor_absoluteY="0dp" />
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp">
 
-            <TextView
-                android:id="@+id/locationTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="м. ВДНХ" />
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:text="Mezzo Forte"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:transitionName="Shared nameTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/image"
+                    tools:layout_editor_absoluteY="0dp" />
 
-            <TextView
-                android:id="@+id/capacityTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bместимость 300 чел."
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
+                <TextView
+                    android:id="@+id/locationTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="м. ВДНХ"
+                    android:transitionName="Shared locationTextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/nameTextView"
+                    app:layout_constraintVertical_bias="0.312" />
 
+                <TextView
+                    android:id="@+id/capacityTextView"
+                    android:layout_width="match_parent"
 
-            <TextView
-                android:id="@+id/ratingTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Рейтинг 8/10"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.478"
-                app:layout_constraintStart_toEndOf="@+id/image" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Bместимость 300 чел."
+                    android:transitionName="Shared capacityTextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.234"
+                    tools:layout_editor_absoluteX="0dp" />
 
-            <TextView
-                android:id="@+id/priceTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="от 4000р" />
+                <TextView
+                    android:id="@+id/ratingTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="148dp"
+                    android:text="Рейтинг 8/10"
+                    android:transitionName="Shared ratingTextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/image" />
+
+                <TextView
+                    android:id="@+id/priceTextView"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="24dp"
+                    android:text="от 4000р"
+                    android:transitionName="Shared priceTextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="0dp" />
+
+            </android.support.constraint.ConstraintLayout>
+
 
         </LinearLayout>
 

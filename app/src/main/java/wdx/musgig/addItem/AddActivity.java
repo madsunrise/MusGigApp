@@ -108,6 +108,7 @@ public class AddActivity extends AppCompatActivity {
 
     private void startCropImageActivity(Uri imageUri) {
         CropImage.activity(imageUri)
+                .setRequestedSize(600, 600)
                 .setAspectRatio(1, 1)
                 .start(this);
     }

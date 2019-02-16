@@ -16,12 +16,17 @@ public class VenueModel {
     private String photo;
 
     public VenueModel(String capacity, String name, String price, String location, String rating, String photo) {
+
         this.capacity = capacity;
         this.name = name;
         this.price = price;
         this.location = location;
         this.rating = rating;
         this.photo = photo;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCapacity() {

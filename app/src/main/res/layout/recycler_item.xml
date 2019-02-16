@@ -4,27 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-    ​
+
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:transitionName="Shared cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="expand"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/recycler_item"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/image"
+                android:transitionName="Shared image"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:transitionName="profile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/mezzo"
                 tools:layout_editor_absoluteY="0dp" />
@@ -38,6 +40,7 @@
 
                 <TextView
                     android:id="@+id/nameTextView"
+                    android:transitionName="Shared nameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -51,12 +54,14 @@
 
                 <TextView
                     android:id="@+id/locationTextView"
+                    android:transitionName="Shared locationTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="м. ВДНХ" />
 
                 <TextView
                     android:id="@+id/capacityTextView"
+                    android:transitionName="Shared capacityTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Bместимость 300 чел."
@@ -67,6 +72,7 @@
 
                 <TextView
                     android:id="@+id/ratingTextView"
+                    android:transitionName="Shared ratingTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Рейтинг 8/10"
@@ -77,6 +83,7 @@
 
                 <TextView
                     android:id="@+id/priceTextView"
+                    android:transitionName="Shared priceTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="от 4000р" />

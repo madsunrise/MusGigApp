@@ -3,10 +3,8 @@ package wdx.musgig.listItems;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -184,16 +182,5 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
 
-    public void expand(View view) {
-        Intent intent = new Intent(this, DetailedActivity.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            View image = findViewById(R.id.image);
-            ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this, image, "profile");
-            startActivity(intent, options.toBundle());
-        } else {
-            startActivity(intent);
-        }
 
-    }
 }
