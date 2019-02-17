@@ -13,6 +13,7 @@ import java.util.List;
 
 import wdx.musgig.R;
 import wdx.musgig.db.AppDatabase;
+import wdx.musgig.db.VenueGetIdViewModel;
 import wdx.musgig.db.VenueListViewModel;
 import wdx.musgig.db.VenueModel;
 
@@ -45,7 +46,7 @@ public class DetailedActivity extends AppCompatActivity {
         position = getIntent().getStringExtra("EXTRA_POSITION");
 
 
-        appDatabase.VenuesModel().getItembyId(position);
+        VenueModel VenueModel = VenueGetIdViewModel.getItemById(position);
 
         nameTextView.setText(VenueModel.getName());
         capacityTextView.setText("Вместимость: " + VenueModel.getCapacity() + " чел.");

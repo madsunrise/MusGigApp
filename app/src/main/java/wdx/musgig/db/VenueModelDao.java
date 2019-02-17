@@ -17,7 +17,7 @@ public interface VenueModelDao {
     LiveData<List<VenueModel>> getAllVenueItems();
 
     @Query("select * from VenueModel where id = :id")
-    VenueModel getItembyId(String id);
+    VenueModel getItemById(String id);
 
 
     @Insert(onConflict = REPLACE)
