@@ -1,36 +1,26 @@
 package wdx.musgig.listItems;
 
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.content.Context;
+import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
 import wdx.musgig.R;
-import wdx.musgig.db.AppDatabase;
 import wdx.musgig.db.VenueGetIdViewModel;
-import wdx.musgig.db.VenueListViewModel;
 import wdx.musgig.db.VenueModel;
 
 public class DetailedActivity extends AppCompatActivity {
-    String position;
-    VenueModel VenueModel;
-    ViewModelProvider.Factory viewModelFactory;
+
     private TextView capacityTextView;
     private TextView nameTextView;
     private TextView priceTextView;
     private TextView locationTextView;
     private TextView ratingTextView;
     private ImageView image;
-    private Context appContext;
-    private List<VenueModel> VenueModelList;
-    private VenueListViewModel viewModel;
-    private AppDatabase appDatabase;
+    private VenueGetIdViewModel VenueGetIdViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +33,11 @@ public class DetailedActivity extends AppCompatActivity {
         ratingTextView = findViewById(R.id.ratingTextView);
         image = findViewById(R.id.image);
 
-        position = getIntent().getStringExtra("EXTRA_POSITION");
+        String id = getIntent().getStringExtra("EXTRA_ID");
+        VenueGetIdViewModel = ViewModelProviders.of(this).get(VenueGetIdViewModel.class);
 
 
-        VenueModel VenueModel = VenueGetIdViewModel.getItemById(position);
-
+        VenueModel VenueModel = VenueGetIdViewModel.getItemById(id);
         nameTextView.setText(VenueModel.getName());
         capacityTextView.setText("Вместимость: " + VenueModel.getCapacity() + " чел.");
         priceTextView.setText("Залог: " + VenueModel.getPrice() + " руб.");
@@ -58,7 +48,6 @@ public class DetailedActivity extends AppCompatActivity {
         else
             image.setImageResource(R.drawable.mezzo);
     }
-
 
 }
 
