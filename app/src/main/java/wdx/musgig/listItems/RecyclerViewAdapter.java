@@ -66,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Pair<View, String> pair5 = Pair.create((View) holder.locationTextView, holder.locationTextView.getTransitionName());
                 Pair<View, String> pair6 = Pair.create((View) holder.ratingTextView, holder.ratingTextView.getTransitionName());
                 Intent intent = new Intent(v.getContext(), DetailedActivity.class);
-                intent.putExtra("EXTRA_ID", VenueModel.getId());
+                intent.putExtra("EXTRA_ID", String.valueOf(VenueModel.getId()));
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), pair1, pair2, pair3, pair4, pair5, pair6);
                 v.getContext().startActivity(intent, optionsCompat.toBundle());
 

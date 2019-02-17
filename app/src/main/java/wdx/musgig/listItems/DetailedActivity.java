@@ -1,9 +1,11 @@
 package wdx.musgig.listItems;
 
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,19 +36,32 @@ public class DetailedActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
 
         String id = getIntent().getStringExtra("EXTRA_ID");
+
         VenueGetIdViewModel = ViewModelProviders.of(this).get(VenueGetIdViewModel.class);
+        VenueGetIdViewModel.getItemById(id).observe(this, new Observer<VenueModel>() {
+            @Override
+            public void onChanged(@Nullable VenueModel VenueModel) {
+                if (VenueModel != null) {
+                    nameTextView.setText(VenueModel.getName());
+                    capacityTextView.setText("Вместимость: " + VenueModel.getCapacity() + " чел.");
+                    priceTextView.setText("Залог: " + VenueModel.getPrice() + " руб.");
+                    locationTextView.setText("Находится: " + VenueModel.getLocation());
+                    ratingTextView.setText("Рейтинг: " + VenueModel.getRating() + " из 10");
+                    if (VenueModel.getPhoto() != null)
+                        image.setImageURI(Uri.parse(VenueModel.getPhoto()));
+                    else
+                        image.setImageResource(R.drawable.mezzo);
+                }
+            }
+        });
 
 
-        VenueModel VenueModel = VenueGetIdViewModel.getItemById(id);
-        nameTextView.setText(VenueModel.getName());
-        capacityTextView.setText("Вместимость: " + VenueModel.getCapacity() + " чел.");
-        priceTextView.setText("Залог: " + VenueModel.getPrice() + " руб.");
-        locationTextView.setText("Находится: " + VenueModel.getLocation());
-        ratingTextView.setText("Рейтинг: " + VenueModel.getRating() + " из 10");
-        if (VenueModel.getPhoto() != null)
-            image.setImageURI(Uri.parse(VenueModel.getPhoto()));
-        else
-            image.setImageResource(R.drawable.mezzo);
+        //      VenueModel VenueModel = VenueGetIdViewModel.getItemById(id);
+
+
+
+
+
     }
 
 }

@@ -2,6 +2,7 @@ package wdx.musgig.db;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 
 public class VenueGetIdViewModel extends AndroidViewModel {
     private AppDatabase appDatabase;
@@ -14,7 +15,7 @@ public class VenueGetIdViewModel extends AndroidViewModel {
 
     }
 
-    public VenueModel getItemById(String itemId) {
+    public LiveData<VenueModel> getItemById(String itemId) {
         return appDatabase.VenuesModel().getItemById(itemId);
     }
 
