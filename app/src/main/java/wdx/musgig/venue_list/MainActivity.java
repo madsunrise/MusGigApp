@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,12 +37,16 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private RecyclerViewAdapter recyclerViewAdapter;
     FrameLayout bar;
     List<VenueModel> filterMem;
+    List<VenueModel> mem;
+    RecyclerView recyclerView;
+    Button clearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bar = findViewById(R.id.bar);
+        clearButton = findViewById(R.id.button2);
         ImageView people_icon = findViewById(R.id.people_icon);
         ImageView price_icon = findViewById(R.id.price_icon);
         View.OnClickListener sortBtn = new View.OnClickListener() {
@@ -73,9 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         };
         people_icon.setOnClickListener(sortBtn);
         price_icon.setOnClickListener(sortBtn);
+        recyclerView = findViewById(R.id.recyclerView);
 
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<VenueModel>(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerViewAdapter);
@@ -83,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
-
                 recyclerViewAdapter.addItems(Venues);
+                mem = Venues;
             }
         });
 
@@ -128,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             }
 
         });
+
 
     }
 
@@ -200,34 +205,27 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
                 filterMem = Venues;
-
                 if (checkRate.isChecked())
                     for (int i = 0; i < Venues.size(); i++) {
                         if (Venues.get(i).getRating() < 4) {
-                            Venues.remove(i);
+                            filterMem.remove(i);
                         }
                     }
 
                 if (checkAlco.isChecked())
                     for (int i = 0; i < Venues.size(); i++) {
                         if (Venues.get(i).getPrice() > 5000) {
-                            Venues.remove(i);
+                            filterMem.remove(i);
                         }
                     }
-
-
-                recyclerViewAdapter.addItems(Venues);
             }
+
         });
+        recyclerViewAdapter.addItems(filterMem);
     }
 
     public void clearFilter(View view) {
-        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
-            @Override
-            public void onChanged(@Nullable List<VenueModel> Venues) {
-                Venues = filterMem;
-                recyclerViewAdapter.addItems(Venues);
-            }
-        });
+        recyclerViewAdapter.addItems(mem);
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 }
