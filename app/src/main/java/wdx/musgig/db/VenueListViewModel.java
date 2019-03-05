@@ -22,7 +22,6 @@ public class VenueListViewModel extends AndroidViewModel {
         VenuesList = appDatabase.VenuesModel().getAllVenueItems();
     }
 
-
     public LiveData<List<VenueModel>> getVenuesList() {
         return VenuesList;
     }
@@ -30,10 +29,6 @@ public class VenueListViewModel extends AndroidViewModel {
     public void deleteItem(VenueModel VenueModel) {
         new deleteAsyncTask(appDatabase).execute(VenueModel);
     }
-
-    //  public LiveData<VenueModel> getItemById(String itemId){
-    //      return appDatabase.VenuesModel().getItemById(itemId);
-    //  }
 
     private static class deleteAsyncTask extends AsyncTask<VenueModel, Void, Void> {
 
@@ -48,7 +43,5 @@ public class VenueListViewModel extends AndroidViewModel {
             db.VenuesModel().deleteVenue(params[0]);
             return null;
         }
-
     }
-
 }

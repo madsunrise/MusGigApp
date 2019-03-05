@@ -1,11 +1,8 @@
-package wdx.musgig.addItem;
+package wdx.musgig.db;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.os.AsyncTask;
-
-import wdx.musgig.db.AppDatabase;
-import wdx.musgig.db.VenueModel;
 
 
 public class AddVenueViewModel extends AndroidViewModel {

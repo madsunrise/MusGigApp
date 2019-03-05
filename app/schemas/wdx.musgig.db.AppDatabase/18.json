@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 18,
-    "identityHash": "83799c5ecbba64eda93e1134948e5923",
+    "identityHash": "997dfa1b4960c8800e5e0d674b22d073",
     "entities": [
       {
         "tableName": "VenueModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `capacity` TEXT, `name` TEXT, `price` TEXT, `location` TEXT, `rating` TEXT, `photo` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `capacity` TEXT, `name` TEXT, `price` TEXT, `location` TEXT, `rating` TEXT, `photo` TEXT, `photo2` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -49,6 +49,12 @@
             "columnName": "photo",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "photo2",
+            "columnName": "photo2",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -63,7 +69,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"83799c5ecbba64eda93e1134948e5923\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"997dfa1b4960c8800e5e0d674b22d073\")"
     ]
   }
 }

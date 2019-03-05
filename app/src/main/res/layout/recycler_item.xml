@@ -8,7 +8,6 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
-        android:transitionName="Shared cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true">
@@ -40,13 +39,16 @@
 
                 <TextView
                     android:id="@+id/nameTextView"
-                    android:transitionName="Shared nameTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:paddingTop="5dp"
                     android:text="Mezzo Forte"
-                    android:textSize="24sp"
+                    android:textSize="25dp"
                     android:textStyle="bold"
+                    android:transitionName="Shared nameTextView"
+                    app:autoSizeMaxTextSize="25dp"
+                    app:autoSizeMinTextSize="15dp"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.042"
                     app:layout_constraintStart_toEndOf="@+id/image"
@@ -54,14 +56,12 @@
 
                 <TextView
                     android:id="@+id/locationTextView"
-                    android:transitionName="Shared locationTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="м. ВДНХ" />
 
                 <TextView
                     android:id="@+id/capacityTextView"
-                    android:transitionName="Shared capacityTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Bместимость 300 чел."
@@ -72,7 +72,6 @@
 
                 <TextView
                     android:id="@+id/ratingTextView"
-                    android:transitionName="Shared ratingTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Рейтинг 8/10"
@@ -83,41 +82,12 @@
 
                 <TextView
                     android:id="@+id/priceTextView"
-                    android:transitionName="Shared priceTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="от 4000р" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="122dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="vertical"
-                android:paddingTop="5dp">
-
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:id="@+id/imageView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:id="@+id/imageView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

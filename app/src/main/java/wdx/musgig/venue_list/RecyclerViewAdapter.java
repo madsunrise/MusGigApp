@@ -1,9 +1,10 @@
-package wdx.musgig.listItems;
+package wdx.musgig.venue_list;
 
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import wdx.musgig.R;
 import wdx.musgig.db.VenueModel;
+import wdx.musgig.venue_full.DetailedActivity;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
@@ -25,14 +27,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private View.OnLongClickListener longClickListener;
 
 
-
-    public RecyclerViewAdapter(List<VenueModel> VenueModelList, View.OnLongClickListener longClickListener) {
+    RecyclerViewAdapter(List<VenueModel> VenueModelList, View.OnLongClickListener longClickListener) {
         this.VenueModelList = VenueModelList;
         this.longClickListener = longClickListener;
     }
 
+
+    @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_item, parent, false));
 
@@ -41,13 +44,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerViewHolder holder, int position) {
         VenueModel VenueModel = VenueModelList.get(position);
         holder.nameTextView.setText(VenueModel.getName());
-        holder.capacityTextView.setText("Вместимость: " + VenueModel.getCapacity() + " чел.");
-        holder.priceTextView.setText("Залог: " + VenueModel.getPrice() + " руб.");
+        holder.capacityTextView.setText("Вместимость: " + String.valueOf(VenueModel.getCapacity()) + " чел.");
+        holder.priceTextView.setText("Залог: " + String.valueOf(VenueModel.getPrice()) + " руб.");
         holder.locationTextView.setText("Находится: " + VenueModel.getLocation());
-        holder.ratingTextView.setText("Рейтинг: " + VenueModel.getRating() + " из 10");
+        holder.ratingTextView.setText("Рейтинг: " + String.valueOf(VenueModel.getRating()) + " из 10");
         if (VenueModel.getPhoto() != null)
             holder.image.setImageURI(Uri.parse(VenueModel.getPhoto()));
         else
@@ -59,17 +62,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Pair<View, String> pair1 = Pair.create((View) holder.image, holder.image.getTransitionName());
-                Pair<View, String> pair2 = Pair.create((View) holder.nameTextView, holder.nameTextView.getTransitionName());
-                Pair<View, String> pair3 = Pair.create((View) holder.capacityTextView, holder.capacityTextView.getTransitionName());
-                Pair<View, String> pair4 = Pair.create((View) holder.priceTextView, holder.priceTextView.getTransitionName());
-                Pair<View, String> pair5 = Pair.create((View) holder.locationTextView, holder.locationTextView.getTransitionName());
-                Pair<View, String> pair6 = Pair.create((View) holder.ratingTextView, holder.ratingTextView.getTransitionName());
-                Intent intent = new Intent(v.getContext(), DetailedActivity.class);
-                intent.putExtra("EXTRA_ID", String.valueOf(VenueModel.getId()));
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), pair1, pair2, pair3, pair4, pair5, pair6);
-                v.getContext().startActivity(intent, optionsCompat.toBundle());
-
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    Pair<View, String> pair1 = Pair.create((View) holder.image, holder.image.getTransitionName());
+                    //  Pair<View, String> pair2 = Pair.create((View) holder.nameTextView, holder.nameTextView.getTransitionName());
+                    Intent intent = new Intent(v.getContext(), DetailedActivity.class);
+                    intent.putExtra("EXTRA_ID", String.valueOf(VenueModel.getId()));
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), pair1);
+                    v.getContext().startActivity(intent, optionsCompat.toBundle());
+                }
             }
         });
 
@@ -81,7 +81,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return VenueModelList.size();
     }
 
-    public void addItems(List<VenueModel> VenueModelList) {
+    void addItems(List<VenueModel> VenueModelList) {
         this.VenueModelList = VenueModelList;
         notifyDataSetChanged();
     }
@@ -95,10 +95,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private ImageView image;
         private LinearLayout recycler_item;
 
-
-
-
-
         RecyclerViewHolder(View view) {
             super(view);
             capacityTextView = view.findViewById(R.id.capacityTextView);
@@ -108,8 +104,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             ratingTextView = view.findViewById(R.id.ratingTextView);
             image = view.findViewById(R.id.image);
             recycler_item = view.findViewById(R.id.recycler_item);
-            //  cardView = view.findViewById(R.id.cardView);
-
 
         }
     }

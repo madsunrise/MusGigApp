@@ -1,9 +1,10 @@
-package wdx.musgig.listItems;
+package wdx.musgig.venue_list;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,16 +12,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import wdx.musgig.R;
-import wdx.musgig.addItem.AddActivity;
+import wdx.musgig.add_venue.AddActivity;
 import wdx.musgig.db.VenueListViewModel;
 import wdx.musgig.db.VenueModel;
 
@@ -29,18 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
     private VenueListViewModel viewModel;
     private RecyclerViewAdapter recyclerViewAdapter;
-    private RecyclerView recyclerView;
     FrameLayout bar;
-
+    List<VenueModel> filterMem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         bar = findViewById(R.id.bar);
-
         ImageView people_icon = findViewById(R.id.people_icon);
         ImageView price_icon = findViewById(R.id.price_icon);
         View.OnClickListener sortBtn = new View.OnClickListener() {
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         price_icon.setOnClickListener(sortBtn);
 
 
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<VenueModel>(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerViewAdapter);
@@ -99,10 +100,10 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                int firstVisibleItem = ((LinearLayoutManager) Objects.requireNonNull(recyclerView.getLayoutManager())).findFirstVisibleItemPosition();
                 //show views if first item is first visible position and views are hidden
                 if (firstVisibleItem == 0) {
                     if (!controlsVisible) {
@@ -145,24 +146,18 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
-                Collections.sort(Venues, new Comparator<VenueModel>() {
+                Collections.sort(Objects.requireNonNull(Venues), new Comparator<VenueModel>() {
                     @Override
                     public int compare(VenueModel first, VenueModel second) {
                         switch (param) {
                             case "people":
                                 if (increase)
-                                    return Integer.valueOf(first.getCapacity()) < Integer.valueOf(second.getCapacity()) ? -1 :
-                                            Integer.valueOf(first.getCapacity()) > Integer.valueOf(second.getCapacity()) ? 1 : 0;
-                                return Integer.valueOf(first.getCapacity()) > Integer.valueOf(second.getCapacity()) ? -1 :
-                                        Integer.valueOf(first.getCapacity()) < Integer.valueOf(second.getCapacity()) ? 1 : 0;
-
+                                    return Integer.compare(first.getCapacity(), second.getCapacity());
+                                return Integer.compare(second.getCapacity(), first.getCapacity());
                             case "price":
                                 if (increase)
-                                    return Integer.valueOf(first.getPrice()) < Integer.valueOf(second.getPrice()) ? -1 :
-                                            Integer.valueOf(first.getPrice()) > Integer.valueOf(second.getPrice()) ? 1 : 0;
-                                return Integer.valueOf(first.getPrice()) > Integer.valueOf(second.getPrice()) ? -1 :
-                                        Integer.valueOf(first.getPrice()) < Integer.valueOf(second.getPrice()) ? 1 : 0;
-
+                                    return Integer.compare(first.getPrice(), second.getPrice());
+                                return Integer.compare(second.getPrice(), first.getPrice());
                         }
                         return 0;
                     }
@@ -182,5 +177,57 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
 
+    public void expand_filter(View view) {
+        ExpandableLayout expand = findViewById(R.id.expandable_layout);
+        expand.toggle();
+    }
 
+    public void filter(View view) {
+
+        CheckBox checkRate, checkAlco, checkWater, checkParking, checkDressing, checkFast, checkWeekdays, checkWifi, checkRoof, checkSmoke;
+        checkRate = findViewById(R.id.checkRate);
+        checkAlco = findViewById(R.id.checkAlco);
+        checkWater = findViewById(R.id.checkWater);
+        checkParking = findViewById(R.id.checkParking);
+        checkDressing = findViewById(R.id.checkDressing);
+        checkFast = findViewById(R.id.checkFast);
+        checkWeekdays = findViewById(R.id.checkWeekdays);
+        checkWifi = findViewById(R.id.checkWifi);
+        checkRoof = findViewById(R.id.checkRoof);
+        checkSmoke = findViewById(R.id.checkSmoke);
+
+        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
+            @Override
+            public void onChanged(@Nullable List<VenueModel> Venues) {
+                filterMem = Venues;
+
+                if (checkRate.isChecked())
+                    for (int i = 0; i < Venues.size(); i++) {
+                        if (Venues.get(i).getRating() < 4) {
+                            Venues.remove(i);
+                        }
+                    }
+
+                if (checkAlco.isChecked())
+                    for (int i = 0; i < Venues.size(); i++) {
+                        if (Venues.get(i).getPrice() > 5000) {
+                            Venues.remove(i);
+                        }
+                    }
+
+
+                recyclerViewAdapter.addItems(Venues);
+            }
+        });
+    }
+
+    public void clearFilter(View view) {
+        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
+            @Override
+            public void onChanged(@Nullable List<VenueModel> Venues) {
+                Venues = filterMem;
+                recyclerViewAdapter.addItems(Venues);
+            }
+        });
+    }
 }

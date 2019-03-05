@@ -1,4 +1,4 @@
-package wdx.musgig.addItem;
+package wdx.musgig.add_venue;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -6,8 +6,11 @@ import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -16,7 +19,13 @@ import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Objects;
+
 import wdx.musgig.R;
+import wdx.musgig.db.AddVenueViewModel;
 import wdx.musgig.db.VenueModel;
 
 public class AddActivity extends AppCompatActivity {
@@ -29,6 +38,7 @@ public class AddActivity extends AppCompatActivity {
     private AddVenueViewModel addVenueViewModel;
     ImageView pickImage;
     private Uri imageUri;
+    private Uri imageUri2;
     private Activity activity;
     Uri mCropImageUri;
 
@@ -52,12 +62,13 @@ public class AddActivity extends AppCompatActivity {
         else {
 
             addVenueViewModel.addVenue(new VenueModel(
-                    capacity.getText().toString(),
+                    Integer.parseInt(capacity.getText().toString()),
                     name.getText().toString(),
-                    price.getText().toString(),
+                    Integer.parseInt(price.getText().toString()),
                     location.getText().toString(),
-                    rating.getText().toString(),
-                    imageUri.toString()
+                    Float.parseFloat(rating.getText().toString()),
+                    imageUri.toString(),
+                    imageUri2.toString()
             ));
             finish();
         }
@@ -94,7 +105,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
 
         if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
             if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -107,6 +118,22 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void startCropImageActivity(Uri imageUri) {
+        //   File in =new File(imageUri.getPath());
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        File out = new File(getCacheDir().getAbsolutePath() + "/" + "not_cropped" + System.currentTimeMillis() + ".jpg");
+        imageUri2 = Uri.fromFile(out);
+        try (FileOutputStream out1 = new FileOutputStream(out)) {
+            Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.JPEG, 80, out1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         CropImage.activity(imageUri)
                 .setRequestedSize(600, 600)
                 .setAspectRatio(1, 1)
@@ -114,8 +141,20 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
+    //  public  void copy(File src, File dst) throws IOException {
+    //      try (InputStream in = new FileInputStream(src)) {
+    //          try (OutputStream out = new FileOutputStream(dst)) {
+    //              // Transfer bytes from in to out
+    //              byte[] buf = new byte[1024];
+    //              int len;
+    //              while ((len = in.read(buf)) > 0) {
+    //                  out.write(buf, 0, len);
+    //               }
+    //           }
+    //       }
+    //   }
 
-        }
+}
 
 
 

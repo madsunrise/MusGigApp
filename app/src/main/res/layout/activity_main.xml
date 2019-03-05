@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".listItems.MainActivity">
+    tools:context=".venue_list.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -42,9 +42,10 @@
             </LinearLayout>
 
             <FrameLayout
-
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
+                android:transitionName="Shared appbar"
                 android:background="@drawable/topbar_background">
 
 
@@ -74,7 +75,8 @@
                         android:layout_width="45dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/icon_selector"
-                        android:visibility="invisible"
+                        android:onClick="expand_filter"
+                        android:visibility="visible"
                         app:srcCompat="@drawable/rate_icon" />
 
                     <ImageView
@@ -108,5 +110,244 @@
                 </LinearLayout>
             </FrameLayout>
         </FrameLayout>
+
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandable_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="53dp"
+            app:el_duration="1000"
+            app:el_expanded="true"
+            app:el_parallax="0.5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bgbg"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <CheckBox
+                            android:id="@+id/checkBox12"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Город" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox13"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Метро" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Цена" />
+
+                        <EditText
+                            android:id="@+id/editText4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number" />
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Вместимость" />
+
+                        <EditText
+                            android:id="@+id/editText5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Сидячих мест" />
+
+                        <EditText
+                            android:id="@+id/editText490"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number" />
+
+                        <TextView
+                            android:id="@+id/textView579"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Размер сценны" />
+
+                        <EditText
+                            android:id="@+id/editText95"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <CheckBox
+                            android:id="@+id/checkRate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="рейтинг 4+" />
+
+                        <CheckBox
+                            android:id="@+id/checkAlco"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Со своим" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <CheckBox
+                            android:id="@+id/checkWater"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Беспл вода" />
+
+                        <CheckBox
+                            android:id="@+id/checkParking"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Беспл паркинг" />
+
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <CheckBox
+                            android:id="@+id/checkDressing"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Гримерка" />
+
+                        <CheckBox
+                            android:id="@+id/checkFast"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Быстрый ответ" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <CheckBox
+                            android:id="@+id/checkWeekdays"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Раб в будни" />
+
+                        <CheckBox
+                            android:id="@+id/checkWifi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="wifi" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <CheckBox
+                            android:id="@+id/checkRoof"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Выс потолки" />
+
+                        <CheckBox
+                            android:id="@+id/checkSmoke"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Дыммашина" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:onClick="filter"
+                        android:text="ищи" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="clearFilter"
+                        android:text="Очистить" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+
     </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

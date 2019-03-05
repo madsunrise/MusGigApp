@@ -8,14 +8,15 @@ public class VenueModel {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
-    private String capacity;
+    private int capacity;
     private String name;
-    private String price;
+    private int price;
     private String location;
-    private String rating;
+    private float rating;
     private String photo;
+    private String photo2;
 
-    public VenueModel(String capacity, String name, String price, String location, String rating, String photo) {
+    public VenueModel(int capacity, String name, int price, String location, float rating, String photo, String photo2) {
 
         this.capacity = capacity;
         this.name = name;
@@ -23,13 +24,14 @@ public class VenueModel {
         this.location = location;
         this.rating = rating;
         this.photo = photo;
+        this.photo2 = photo2;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
@@ -37,7 +39,7 @@ public class VenueModel {
         return name;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -45,11 +47,16 @@ public class VenueModel {
         return location;
     }
 
-    public String getRating() {
+    public float getRating() {
         return rating;
     }
 
     public String getPhoto() {
         return photo;
     }
+
+    public String getPhoto2() {
+        return photo2;
+    }
 }
+

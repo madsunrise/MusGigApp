@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".listItems.MainActivity">
+        <activity android:name=".venue_list.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,12 +24,17 @@
         </activity>
 
         <activity
-            android:name=".addItem.AddActivity"
+            android:name=".add_venue.AddActivity"
             android:label="@string/title_activity_add"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".listItems.DetailedActivity"
+            android:name=".venue_full.DetailedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <activity
+            android:name=".venue_full.FullscreenImage"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity

@@ -1,5 +1,6 @@
-package wdx.musgig.listItems;
+package wdx.musgig.venue_list;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
 public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {
@@ -8,7 +9,7 @@ public abstract class HidingScrollListener extends RecyclerView.OnScrollListener
     boolean controlsVisible = true;
 
     @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
         if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {

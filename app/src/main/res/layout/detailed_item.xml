@@ -1,112 +1,744 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="25dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="477dp"
-        android:transitionName="Shared cardView"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="199dp"
-                android:scaleType="center"
-                android:transitionName="Shared image"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/mezzo"
-                tools:layout_editor_absoluteY="0dp" />
 
-            <android.support.constraint.ConstraintLayout
+            <FrameLayout
+
+                android:id="@+id/topbar"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@drawable/topbar_background">
+
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="5dp"
+                    android:src="@drawable/logo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/place_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/icon_selector"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/place_icon" />
+
+                    <ImageView
+                        android:id="@+id/rate_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/icon_selector"
+                        android:clickable="true"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/pano" />
+
+                    <ImageView
+                        android:id="@+id/like_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/icon_selector"
+                        android:clickable="true"
+                        app:srcCompat="@drawable/love" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="140dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/icon_selector"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="Отправить заявку"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="14sp"
+                        android:typeface="normal" />
+                </LinearLayout>
+            </FrameLayout>
+
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:transitionName="Shared image" />
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                app:cardPreventCornerOverlap="false"
+                app:contentPadding="0dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.93"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/max_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="3000"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Макс. цена" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/separator1"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.93"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/capacity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="250"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/capacitytext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Вместимость" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/separator2"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/listDivider" />
+
+
+                    <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="20dp">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/feedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="14"
+                    android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/feedbacktext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Отзывов" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/separator3"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/listDivider" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/rating"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="6.1"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/ratetext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Рейтинг" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/nameTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
                     android:text="Mezzo Forte"
-                    android:textSize="36sp"
+                    android:textSize="35sp"
                     android:textStyle="bold"
                     android:transitionName="Shared nameTextView"
+                    app:autoSizeMaxTextSize="35dp"
+                    app:autoSizeMinTextSize="15dp"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.966"
                     app:layout_constraintStart_toEndOf="@+id/image"
                     tools:layout_editor_absoluteY="0dp" />
 
-                <TextView
-                    android:id="@+id/locationTextView"
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/place_icon" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="5dp"
+                        android:text="Китай-Город, Лубянский проезд, 25с1"
+                        android:textColor="@android:color/darker_gray" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/full_info"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="м. ВДНХ"
-                    android:transitionName="Shared locationTextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/nameTextView"
-                    app:layout_constraintVertical_bias="0.312" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:paddingBottom="15dp"
+                    android:text="За 19 лет существования клуб «Китайский Летчик Джао Да» приобрел самую лучшую в мире репутацию. Его знают на Ямайке, в Бразилии, в Бенине, на островах Зеленого мыса, в Америке и, конечно же, по всей Европе." />
 
-                <TextView
-                    android:id="@+id/capacityTextView"
+
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bgbg"
+                    android:orientation="vertical"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Bместимость 300 чел."
-                    android:transitionName="Shared capacityTextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.234"
-                    tools:layout_editor_absoluteX="0dp" />
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/topcap" />
 
-                <TextView
-                    android:id="@+id/ratingTextView"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="27dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:paddingRight="5dp"
+                            app:srcCompat="@drawable/alco" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Принести алкоголь:"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/alco"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="Да" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="27dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:paddingRight="5dp"
+                            app:srcCompat="@drawable/chair" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Сидячих мест в зале:"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/sit"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="25" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="27dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:paddingRight="6dp"
+                            app:srcCompat="@drawable/soundman" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Ценник звукооператора:"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/soundman"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="Включено" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="27dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:paddingRight="5dp"
+                            app:srcCompat="@drawable/time" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Ограничение по времени:"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/time"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="до 22:00" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="27dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="0"
+                            android:paddingRight="5dp"
+                            app:srcCompat="@drawable/genre" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Направление по жанрам:"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/genre"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Rock, Jazz, Rap" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="27dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="0"
+                            android:paddingRight="5dp"
+                            app:srcCompat="@drawable/stage" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="На сцене нельзя:"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/stage_rule"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Употреблять героин" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/topcap" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Райдер"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Гримерка"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Отдельное небольшое помещение ( Гримерка \ 6 кв.м.) с прямым выходом на сцену.  Стол, стулья, зеркало, вешалки, розетки.  " />
+
+
+                        <TextView
+                            android:id="@+id/textView168"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Размер сцены"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView187"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Ширина 6м., глубина 4м., высота от пола 0,7 м" />
+
+                        <TextView
+                            android:id="@+id/textView176"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Пульт"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView177"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" Soundcraft Si Performer 3 ( +  Stagebox Soundcraft MSB-32 ); remote control + Ipad" />
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Микрофоны"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView21"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Sennheiser - Drum set:  e 602; 4 x e 604;  2 x e 614.  4 х Shure Beta 58a;    2 х Shure Beta 57a; 4 х Shure 58. " />
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Гитарный усилитель"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Fender Hot Rod Deluxe III (Футсвитч в наличии).                                       Peavey classic 30 (Футсвитч в наличии). " />
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Бас-гитарный усилитель"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView25"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Markbass CMD 102P (2x10). " />
+
+                        <TextView
+                            android:id="@+id/textView30"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Мониторная линия"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="4 независимые линии (2 х EAW FR159Z; Dynacord am12; Dynacord m12) " />
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Акустическая система"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView29"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Н4 tops  х EAW FR159Z 4 subs х EAW FR250Z  -  (Dual 15”) 1 top  - EAW FR159Z (delay) ет" />
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Барабаны"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView27"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Sonor select force 3 " />
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Стойки"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView33"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="4 х Стойки микрофонные  типа “журавль”;   3  х Стойки микрофонные прямые с круглым основанием;   2 х стойки для клавиш одноярусные. 3 х стойки  для гитар. " />
+
+                        <TextView
+                            android:id="@+id/textView34"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Свет"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView35"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="4x - ADJ vizi BSW300 4x - ADJ vizi HEX wash 7 8x - ROSE Quad led par (RGBW) 4x - Прожекторы Par " />
+
+                        <TextView
+                            android:id="@+id/textView36"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="Дополнительно"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView37"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="DI:  2 х  Klark Teknik DN200 (stereo). Зал оборудован 6 плазменными телевизорами  и  проектором  DELL 7700 full HD, для видео презентаций, слайд-шоу, афиш вашего мероприятия.  Для трансляции вам нужно принести устройство воспроизведения (компьютер  с HDMI портом).  " />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="10dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="148dp"
-                    android:text="Рейтинг 8/10"
-                    android:transitionName="Shared ratingTextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/image" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/priceTextView"
+                    <TextView
+                        android:id="@+id/textView48"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Сайт:"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView49"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="5dp"
+                        android:text="www.ya.ru" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                    android:layout_height="24dp"
-                    android:text="от 4000р"
-                    android:transitionName="Shared priceTextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="0dp" />
+                    <TextView
+                        android:id="@+id/textView498"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Почта:"
+                        android:textStyle="bold" />
 
-            </android.support.constraint.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/textView499"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="5dp"
+                        android:text="da@ya.ru" />
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</LinearLayout>

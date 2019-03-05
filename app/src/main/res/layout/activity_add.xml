@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".addItem.AddActivity">
+    tools:context=".add_venue.AddActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -61,20 +61,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/venue_capacity"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/venue_price"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Рейтинг"
-        android:inputType="number" />
+        android:inputType="numberDecimal|numberSigned" />
 
 </LinearLayout>
