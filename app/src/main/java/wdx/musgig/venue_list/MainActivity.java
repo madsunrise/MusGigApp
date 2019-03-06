@@ -148,10 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
     public void sortBy(String param, boolean increase) {
-        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
-            @Override
-            public void onChanged(@Nullable List<VenueModel> Venues) {
-                Collections.sort(Objects.requireNonNull(Venues), new Comparator<VenueModel>() {
+
+        Collections.sort(Objects.requireNonNull(filterMem), new Comparator<VenueModel>() {
                     @Override
                     public int compare(VenueModel first, VenueModel second) {
                         switch (param) {
@@ -167,9 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                         return 0;
                     }
                 });
-                recyclerViewAdapter.addItems(Venues);
-            }
-        });
+        recyclerViewAdapter.addItems(filterMem);
     }
 
 
@@ -201,12 +197,8 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         checkRoof = findViewById(R.id.checkRoof);
         checkSmoke = findViewById(R.id.checkSmoke);
 
-        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
-            @Override
-            public void onChanged(@Nullable List<VenueModel> Venues) {
-                Venues = new ArrayList<>(filterMem);
 
-                Iterator<VenueModel> itr = Venues.iterator();
+        Iterator<VenueModel> itr = filterMem.iterator();
                 while (itr.hasNext()) {
                     VenueModel i = itr.next();
                     boolean rating = (checkRate.isChecked()) && (i.getRating() < 4);
@@ -215,16 +207,15 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
 
                     }
-                recyclerViewAdapter.addItems(Venues);
+        recyclerViewAdapter.addItems(filterMem);
             }
-        });
-    }
+
 
     public void clearFilter(View view) {
         viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
-                Venues = new ArrayList<>(filterMem);
+                filterMem = new ArrayList<>(Venues);
                 recyclerViewAdapter.addItems(Venues);
             }
         });
