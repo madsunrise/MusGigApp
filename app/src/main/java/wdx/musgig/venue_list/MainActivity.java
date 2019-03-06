@@ -22,6 +22,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private RecyclerViewAdapter recyclerViewAdapter;
     FrameLayout bar;
     List<VenueModel> filterMem;
-    List<VenueModel> mem;
     RecyclerView recyclerView;
     Button clearButton;
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
                 recyclerViewAdapter.addItems(Venues);
-                mem = Venues;
+                filterMem = new ArrayList<>(Venues);
             }
         });
 
@@ -204,28 +204,29 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
-                filterMem = Venues;
-                if (checkRate.isChecked())
-                    for (int i = 0; i < Venues.size(); i++) {
-                        if (Venues.get(i).getRating() < 4) {
-                            filterMem.remove(i);
-                        }
-                    }
+                Venues = new ArrayList<>(filterMem);
 
-                if (checkAlco.isChecked())
-                    for (int i = 0; i < Venues.size(); i++) {
-                        if (Venues.get(i).getPrice() > 5000) {
-                            filterMem.remove(i);
-                        }
+                Iterator<VenueModel> itr = Venues.iterator();
+                while (itr.hasNext()) {
+                    VenueModel i = itr.next();
+                    boolean rating = (checkRate.isChecked()) && (i.getRating() < 4);
+                    boolean alco = (checkAlco.isChecked()) && (i.getPrice() > 5000);
+                    if (rating || alco) itr.remove();
+
+
                     }
+                recyclerViewAdapter.addItems(Venues);
             }
-
         });
-        recyclerViewAdapter.addItems(filterMem);
     }
 
     public void clearFilter(View view) {
-        recyclerViewAdapter.addItems(mem);
-        recyclerViewAdapter.notifyDataSetChanged();
+        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
+            @Override
+            public void onChanged(@Nullable List<VenueModel> Venues) {
+                Venues = new ArrayList<>(filterMem);
+                recyclerViewAdapter.addItems(Venues);
+            }
+        });
     }
 }
