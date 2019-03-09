@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bar = findViewById(R.id.bar);
+        bar = findViewById(R.id.appbar);
         clearButton = findViewById(R.id.button2);
         ImageView people_icon = findViewById(R.id.people_icon);
         ImageView price_icon = findViewById(R.id.price_icon);
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
                 recyclerViewAdapter.addItems(Venues);
-                filterMem = new ArrayList<>(Venues);
+                filterMem = new ArrayList<>(Objects.requireNonNull(Venues));
             }
         });
 
@@ -186,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     public void filter(View view) {
 
         CheckBox checkRate, checkAlco, checkWater, checkParking, checkDressing, checkFast, checkWeekdays, checkWifi, checkRoof, checkSmoke;
+        boolean rating, alco, water, parking, dressing, fast, weekdays, wifi, roof, smoke;
         checkRate = findViewById(R.id.checkRate);
         checkAlco = findViewById(R.id.checkAlco);
         checkWater = findViewById(R.id.checkWater);
@@ -197,15 +200,13 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         checkRoof = findViewById(R.id.checkRoof);
         checkSmoke = findViewById(R.id.checkSmoke);
 
-
         Iterator<VenueModel> itr = filterMem.iterator();
                 while (itr.hasNext()) {
                     VenueModel i = itr.next();
-                    boolean rating = (checkRate.isChecked()) && (i.getRating() < 4);
-                    boolean alco = (checkAlco.isChecked()) && (i.getPrice() > 5000);
-                    if (rating || alco) itr.remove();
-
-
+                    rating = (checkRate.isChecked()) && (i.getRating() < 4);
+                    alco = (checkAlco.isChecked()) && (i.getPrice() > 5000);
+                    if (rating || alco)
+                        itr.remove();
                     }
         recyclerViewAdapter.addItems(filterMem);
             }
@@ -215,9 +216,24 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
             @Override
             public void onChanged(@Nullable List<VenueModel> Venues) {
-                filterMem = new ArrayList<>(Venues);
+                filterMem = new ArrayList<>(Objects.requireNonNull(Venues));
                 recyclerViewAdapter.addItems(Venues);
             }
         });
     }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
 }
