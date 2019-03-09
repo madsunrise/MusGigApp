@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -42,12 +43,15 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     List<VenueModel> filterMem;
     RecyclerView recyclerView;
     Button clearButton;
+    DrawerLayout drawer;
+    private long mBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bar = findViewById(R.id.appbar);
+        drawer = findViewById(R.id.drawer_layout);
         clearButton = findViewById(R.id.button2);
         ImageView people_icon = findViewById(R.id.people_icon);
         ImageView price_icon = findViewById(R.id.price_icon);
@@ -170,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         recyclerViewAdapter.addItems(filterMem);
     }
 
-
     private void hideViews() {
         bar.animate().translationY(-bar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
     }
@@ -178,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     private void showViews() {
         bar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
-
 
     public void expand_filter(View view) {
         ExpandableLayout expand = findViewById(R.id.expandable_layout);
@@ -225,15 +227,19 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
-        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
-            drawer.closeDrawer(GravityCompat.END);
-        } else {
+        else if (mBackPressed + 5000 > System.currentTimeMillis()) {
             super.onBackPressed();
+            return;
+        } else {
+            Toast.makeText(getBaseContext(), "Еще раз \"назад\" чтобы выйти", Toast.LENGTH_SHORT).show();
         }
+        mBackPressed = System.currentTimeMillis();
     }
 
 
+    public void open_drawer(View view) {
+        drawer.openDrawer(GravityCompat.START);
+    }
 }

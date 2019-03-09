@@ -36,6 +36,7 @@
                 android:layout_width="55dp"
                 android:layout_height="match_parent"
                 android:paddingLeft="5dp"
+                android:onClick="open_drawer"
                 android:src="@drawable/logo" />
 
             <LinearLayout
@@ -98,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="53dp"
             app:el_duration="1000"
-            app:el_expanded="true"
+            app:el_expanded="false"
             app:el_parallax="0.5">
 
             <include
@@ -119,7 +120,6 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         android:fitsSystemWindows="true"
-        android:visibility="gone"
         app:arc_cropDirection="cropInside"
         app:arc_width="96dp"
         app:headerLayout="@layout/drawer_layout"
