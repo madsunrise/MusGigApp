@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.jsibbold:zoomage:1.2.0'
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     implementation 'com.rom4ek:arcnavigationview:1.0.3'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }

@@ -3,38 +3,93 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/drawer_background"
     android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:srcCompat="@mipmap/ic_launcher_round" />
-
-    <Button
-        android:id="@+id/button4"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:background="@drawable/drawer_bg"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageView1"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/mezzo"
+            app:riv_border_color="#333333"
+            app:riv_border_width="2dip"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Андрей Голицын"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Арт-директор"
+            android:textColor="?attr/colorButtonNormal"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/drawer_background"
+        android:clickable="false" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/drawer_background"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Заявки" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/drawer_background"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Площадки" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:background="@color/drawer_background"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Баланс" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:background="@color/drawer_background"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="musgig" />
 
     <Button
-        android:id="@+id/button7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_height="10dp"
+        android:background="@color/drawer_background"
+        android:clickable="false" />
+
 
 </LinearLayout>
