@@ -6,4 +6,6 @@
     <string name="venue_price">Цена</string>
     <string name="pick_image_intent_text">Выберите опцию</string>
     <string name="internal_error_has_occurred">К сожалению, произошла ошибка</string>
+    <integer name="com_vk_sdk_AppId">6894993</integer>
+    <string name="server_client_id">554376451897-27gm0vfmo5s6dskppse273flu2r1apid.apps.googleusercontent.com</string>
 </resources>
