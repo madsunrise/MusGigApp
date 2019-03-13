@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResult(VKAccessToken res) {
                 getVkInfo();
                 Toast.makeText(LoginActivity.this, "Вы успешно авторизировались", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -94,8 +95,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         vkAccessToken = currentToken();
         updateUI(account, vkAccessToken);
@@ -154,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                     VKAccessToken vkAccessToken = currentToken();
                     int id = vkAccessToken != null ? Integer.parseInt(vkAccessToken.userId) : 0;
                     setAccountData(name, String.valueOf(id), photo);
+                    onStart();
                     //Пишем в базу и вызываем интент
                 } catch (JSONException e) {
                     e.printStackTrace();
