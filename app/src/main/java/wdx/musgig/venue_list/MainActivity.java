@@ -1,11 +1,8 @@
 package wdx.musgig.venue_list;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -33,19 +30,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import wdx.musgig.R;
 import wdx.musgig.add_venue.AddActivity;
-import wdx.musgig.db.VenueListViewModel;
-import wdx.musgig.db.VenueModel;
+import wdx.musgig.retrofit.Controller;
+import wdx.musgig.retrofit.RestApi;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnLongClickListener {
+public class MainActivity extends AppCompatActivity {
 
-    private VenueListViewModel viewModel;
+    private static RestApi RestApi;
+    RecyclerView recyclerView;
+    List<wdx.musgig.retrofit.Venues> Venues;
     private RecyclerViewAdapter recyclerViewAdapter;
     FrameLayout bar;
-    List<VenueModel> filterMem;
-    RecyclerView recyclerView;
     DrawerLayout drawer;
     private long mBackPressed;
     CheckBox checkRate, checkAlco, checkWater, checkParking, checkDressing, checkFast, checkWeekdays, checkWifi, checkRoof, checkSmoke;
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     ImageView people_icon, price_icon;
     TextView acc_name, acc_position;
     RoundedImageView acc_photo;
-
     ExpandableLayout expand;
 
     @Override
@@ -62,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewsById();
+
+        RestApi = Controller.getApi();
+        Venues = new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewAdapter = new RecyclerViewAdapter(Venues);
+        recyclerView.setAdapter(recyclerViewAdapter);
         View.OnClickListener sortBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,10 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         };
         people_icon.setOnClickListener(sortBtn);
         price_icon.setOnClickListener(sortBtn);
-        viewModel = ViewModelProviders.of(this).get(VenueListViewModel.class);
-        recyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<VenueModel>(), this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addOnScrollListener(new HidingScrollListener() {
             @Override
             public void onHide() {
@@ -134,16 +135,15 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         initRecycler();
     }
 
-
     public void addVenue(View view) {
         startActivity(new Intent(MainActivity.this, AddActivity.class));
     }
 
     public void sortBy(String param, boolean increase) {
 
-        Collections.sort(Objects.requireNonNull(filterMem), new Comparator<VenueModel>() {
+        Collections.sort(Objects.requireNonNull(Venues), new Comparator<wdx.musgig.retrofit.Venues>() {
             @Override
-            public int compare(VenueModel first, VenueModel second) {
+            public int compare(wdx.musgig.retrofit.Venues first, wdx.musgig.retrofit.Venues second) {
                 switch (param) {
                     case "people":
                         if (increase)
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                 return 0;
             }
         });
-        recyclerViewAdapter.addItems(filterMem);
+        recyclerViewAdapter.addItems(Venues);
     }
 
     public void expand_filter(View view) {
@@ -165,15 +165,16 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
     public void filter(View view) {
-        Iterator<VenueModel> itr = filterMem.iterator();
+        initRecycler();
+        Iterator<wdx.musgig.retrofit.Venues> itr = Venues.iterator();
         while (itr.hasNext()) {
-            VenueModel i = itr.next();
+            wdx.musgig.retrofit.Venues i = itr.next();
             rating = (checkRate.isChecked()) && (i.getRating() < 4);
             alco = (checkAlco.isChecked()) && (i.getPrice() > 5000);
             if (rating || alco)
                 itr.remove();
         }
-        recyclerViewAdapter.addItems(filterMem);
+        recyclerViewAdapter.addItems(Venues);
     }
 
     public void clearFilter(View view) {
@@ -181,13 +182,21 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
     public void initRecycler() {
-        viewModel.getVenuesList().observe(MainActivity.this, new Observer<List<VenueModel>>() {
+        RestApi.getData().enqueue(new Callback<List<wdx.musgig.retrofit.Venues>>() {
             @Override
-            public void onChanged(@Nullable List<VenueModel> Venues) {
-                filterMem = new ArrayList<>(Objects.requireNonNull(Venues));
+            public void onResponse(Call<List<wdx.musgig.retrofit.Venues>> call, Response<List<wdx.musgig.retrofit.Venues>> response) {
+                Venues.clear();
+                Venues.addAll(response.body());
                 recyclerViewAdapter.addItems(Venues);
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<wdx.musgig.retrofit.Venues>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     public void setAccountData(String name, int id, String photo_200_orig) {
@@ -197,14 +206,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             acc_position.setText(String.valueOf(id));
             Glide.with(this).load(photo_200_orig).into(acc_photo);
         }
-    }
-
-
-    @Override
-    public boolean onLongClick(View view) {
-        VenueModel VenueModel = (VenueModel) view.getTag();
-        viewModel.deleteItem(VenueModel);
-        return true;
     }
 
 
@@ -251,5 +252,9 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
     public void start_login_activity(View view) {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
+    }
+
+
+    public void retrofit(View view) {
     }
 }

@@ -18,18 +18,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import wdx.musgig.R;
-import wdx.musgig.db.VenueModel;
 import wdx.musgig.venue_full.DetailedActivity;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
-    private List<VenueModel> VenueModelList;
-    private View.OnLongClickListener longClickListener;
+    private List<wdx.musgig.retrofit.Venues> Venues;
 
 
-    RecyclerViewAdapter(List<VenueModel> VenueModelList, View.OnLongClickListener longClickListener) {
-        this.VenueModelList = VenueModelList;
-        this.longClickListener = longClickListener;
+    RecyclerViewAdapter(List<wdx.musgig.retrofit.Venues> Venues) {
+        this.Venues = Venues;
     }
 
 
@@ -45,18 +42,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewHolder holder, int position) {
-        VenueModel VenueModel = VenueModelList.get(position);
-        holder.nameTextView.setText(VenueModel.getName());
-        holder.capacityTextView.setText("Вместимость: " + String.valueOf(VenueModel.getCapacity()) + " чел.");
-        holder.priceTextView.setText("Залог: " + String.valueOf(VenueModel.getPrice()) + " руб.");
-        holder.locationTextView.setText("Находится: " + VenueModel.getLocation());
-        holder.ratingTextView.setText("Рейтинг: " + String.valueOf(VenueModel.getRating()) + " из 10");
-        if (VenueModel.getPhoto() != null)
-            holder.image.setImageURI(Uri.parse(VenueModel.getPhoto()));
+        wdx.musgig.retrofit.Venues Venue = Venues.get(position);
+        holder.nameTextView.setText(Venue.getName());
+        holder.capacityTextView.setText("Вместимость: " + String.valueOf(Venue.getCapacity()) + " чел.");
+        holder.priceTextView.setText("Залог: " + String.valueOf(Venue.getPrice()) + " руб.");
+        holder.locationTextView.setText("Находится: " + Venue.getLocation());
+        holder.ratingTextView.setText("Рейтинг: " + String.valueOf(Venue.getRating()) + " из 10");
+        if (Venue.getPhoto() != null)
+            holder.image.setImageURI(Uri.parse(Venue.getPhoto()));
         else
             holder.image.setImageResource(R.drawable.mezzo);
-        holder.itemView.setTag(VenueModel);
-        holder.itemView.setOnLongClickListener(longClickListener);
+        //     holder.itemView.setTag(VenueModel);
+        //      holder.itemView.setOnLongClickListener(longClickListener);
 
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     Pair<View, String> pair1 = Pair.create((View) holder.image, holder.image.getTransitionName());
                     //  Pair<View, String> pair2 = Pair.create((View) holder.nameTextView, holder.nameTextView.getTransitionName());
                     Intent intent = new Intent(v.getContext(), DetailedActivity.class);
-                    intent.putExtra("EXTRA_ID", String.valueOf(VenueModel.getId()));
+                    intent.putExtra("EXTRA_ID", String.valueOf(Venue.getId()));
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), pair1);
                     v.getContext().startActivity(intent, optionsCompat.toBundle());
                 }
@@ -78,11 +75,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return VenueModelList.size();
+        if (Venues == null)
+            return 0;
+        return Venues.size();
     }
 
-    void addItems(List<VenueModel> VenueModelList) {
-        this.VenueModelList = VenueModelList;
+    void addItems(List<wdx.musgig.retrofit.Venues> Venues) {
+        this.Venues = Venues;
         notifyDataSetChanged();
     }
 

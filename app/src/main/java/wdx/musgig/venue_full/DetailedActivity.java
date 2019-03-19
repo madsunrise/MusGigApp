@@ -1,11 +1,8 @@
 package wdx.musgig.venue_full;
 
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -14,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import wdx.musgig.R;
-import wdx.musgig.db.VenueGetIdViewModel;
-import wdx.musgig.db.VenueModel;
 
 public class DetailedActivity extends AppCompatActivity {
 
@@ -41,21 +36,21 @@ public class DetailedActivity extends AppCompatActivity {
 
         String id = getIntent().getStringExtra("EXTRA_ID");
 
-        wdx.musgig.db.VenueGetIdViewModel venueGetIdViewModel = ViewModelProviders.of(this).get(VenueGetIdViewModel.class);
-        venueGetIdViewModel.getItemById(id).observe(this, new Observer<VenueModel>() {
-            @Override
-            public void onChanged(@Nullable VenueModel VenueModel) {
-                if (VenueModel != null) {
-                    nameTextView.setText(VenueModel.getName());
-                    capacity.setText(String.valueOf(VenueModel.getCapacity()));
-                    max_price.setText(String.valueOf(VenueModel.getPrice()));
-                    location.setText(VenueModel.getLocation() + ", Лубянский проезд, 25с1");
-                    rating.setText(String.valueOf(VenueModel.getRating()));
-                    if (VenueModel.getPhoto2() != null)
-                        init_pager(Uri.parse(VenueModel.getPhoto2()), Uri.parse(VenueModel.getPhoto2()));
-                }
-            }
-        });
+        //    wdx.musgig.db.VenueGetIdViewModel venueGetIdViewModel = ViewModelProviders.of(this).get(VenueGetIdViewModel.class);
+        //    venueGetIdViewModel.getItemById(id).observe(this, new Observer<VenueModel>() {
+        //        @Override
+        //      public void onChanged(@Nullable VenueModel VenueModel) {
+        //          if (VenueModel != null) {
+        //               nameTextView.setText(VenueModel.getName());
+        //               capacity.setText(String.valueOf(VenueModel.getCapacity()));
+        //               max_price.setText(String.valueOf(VenueModel.getPrice()));
+        //               location.setText(VenueModel.getLocation() + ", Лубянский проезд, 25с1");
+        //               rating.setText(String.valueOf(VenueModel.getRating()));
+        //               if (VenueModel.getPhoto2() != null)
+        //                   init_pager(Uri.parse(VenueModel.getPhoto2()), Uri.parse(VenueModel.getPhoto2()));
+        //           }
+        //       }
+        //    });
     }
 
 

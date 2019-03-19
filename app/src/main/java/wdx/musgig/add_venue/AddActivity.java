@@ -3,7 +3,6 @@ package wdx.musgig.add_venue;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -24,9 +23,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import wdx.musgig.R;
-import wdx.musgig.db.AddVenueViewModel;
-import wdx.musgig.db.VenueModel;
+import wdx.musgig.retrofit.RestApi;
+import wdx.musgig.retrofit.Test;
+import wdx.musgig.retrofit.Venues;
+
 
 public class AddActivity extends AppCompatActivity {
     private EditText capacity;
@@ -35,12 +39,12 @@ public class AddActivity extends AppCompatActivity {
     private EditText location;
     private EditText rating;
     public static final int RC_CAMERA = 5;
-    private AddVenueViewModel addVenueViewModel;
     ImageView pickImage;
     private Uri imageUri;
     private Uri imageUri2;
     private Activity activity;
     Uri mCropImageUri;
+    private static RestApi RestApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,29 @@ public class AddActivity extends AppCompatActivity {
         rating = findViewById(R.id.rating);
         pickImage = findViewById(R.id.pickImage);
 
-        addVenueViewModel = ViewModelProviders.of(this).get(AddVenueViewModel.class);
+        Test body = new Test();
+        body.name = ("myLogin");
+        body.capacity = (76);
+        body.location = ("tyhr");
+        body.price = (76568);
+        body.rating = (565f);
+        body.photo = ("yytryukjdh");
+        body.photo2 = ("yytrdh");
+
+
+        RestApi.addVenue(body).enqueue(new Callback<Venues>() {
+
+            @Override
+            public void onResponse(Call<Venues> call, Response<Venues> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Venues> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public void addButton(View view) {
@@ -61,17 +87,19 @@ public class AddActivity extends AppCompatActivity {
             Toast.makeText(AddActivity.this, "Missing fields", Toast.LENGTH_SHORT).show();
         else {
 
-            addVenueViewModel.addVenue(new VenueModel(
-                    Integer.parseInt(capacity.getText().toString()),
-                    name.getText().toString(),
-                    Integer.parseInt(price.getText().toString()),
-                    location.getText().toString(),
-                    Float.parseFloat(rating.getText().toString()),
-                    imageUri.toString(),
-                    imageUri2.toString()
-            ));
+            //       addVenueViewModel.addVenue(new VenueModel(
+            //              Integer.parseInt(capacity.getText().toString()),
+            //              name.getText().toString(),
+            //              Integer.parseInt(price.getText().toString()),
+            //              location.getText().toString(),
+            //              Float.parseFloat(rating.getText().toString()),
+            //              imageUri.toString(),
+            //              imageUri2.toString()
+            //       ));
             finish();
         }
+
+
     }
 
     public void openCamera(View view) {
@@ -153,6 +181,7 @@ public class AddActivity extends AppCompatActivity {
     //           }
     //       }
     //   }
+
 
 }
 
